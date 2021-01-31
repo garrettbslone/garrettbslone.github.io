@@ -3,6 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=web,webstorm,webstorm+all,jekyll
 
 ### Jekyll ###
+!_layouts/*
 _site/
 .sass-cache/
 .jekyll-cache/
