@@ -189,4 +189,6 @@ modules.xml
 # Sonarlint plugin
 .idea/sonarlint
 
+.run-loc.sh
+Gemfile.lock
 # End of https://www.toptal.com/developers/gitignore/api/web,webstorm,webstorm+all,jekyll
