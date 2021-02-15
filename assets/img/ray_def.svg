@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 200 100" style="enable-background:new 0 0 200 100;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:0.75;stroke-miterlimit:10;}
+	.st1{fill:none;}
+	.st2{fill:none;stroke:#006837;stroke-width:0.75;stroke-miterlimit:10;}
+	.st3{fill:#006837;}
+	.st4{fill:none;stroke:#1B1464;stroke-width:0.75;stroke-miterlimit:10;}
+	.st5{fill:#1B1464;}
+	.st6{font-family:'MyriadPro-Regular';}
+	.st7{font-size:4px;}
+</style>
+<g>
+	<g>
+		<line class="st0" x1="15.5" y1="6.4" x2="15.5" y2="93.5"/>
+		<g>
+			<polygon points="14.2,7.9 15.5,6.6 16.8,7.9 16.8,6.8 15.5,5.5 14.2,6.8 			"/>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<line class="st0" x1="98.6" y1="93.5" x2="15.5" y2="93.5"/>
+		<g>
+			<polygon points="97.1,92.2 98.4,93.5 97.1,94.8 98.2,94.8 99.5,93.5 98.2,92.2 			"/>
+		</g>
+	</g>
+</g>
+<rect x="4.2" y="7.8" class="st1" width="8.4" height="10.1"/>
+<g>
+	<g>
+		<line class="st2" x1="44.2" y1="59.6" x2="15.5" y2="93.5"/>
+		<g>
+			<polygon class="st3" points="41.6,59.3 48.5,54.5 44.9,62.1 			"/>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<line class="st4" x1="86" y1="46" x2="48.5" y2="54.5"/>
+		<g>
+			<polygon class="st5" points="84.1,44.2 92.5,44.5 85.1,48.4 			"/>
+		</g>
+	</g>
+</g>
+<rect x="15" y="65.3" class="st1" width="25.5" height="4.7"/>
+<text transform="matrix(1 0 0 1 19.1519 68.1592)" class="st3 st6 st7">Ray Origin</text>
+<rect x="42" y="43.8" class="st1" width="41.9" height="8"/>
+<text transform="matrix(1 0 0 1 49.4121 46.6426)" class="st5 st6 st7">Scaled Direction</text>
+</svg>

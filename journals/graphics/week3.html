@@ -1,0 +1,109 @@
+---
+layout: default
+title: "Week 3"
+description: Ray Intersections.
+---
+
+<body>
+    <div class="content-border">
+        <h2>Rays</h2>
+        <p>
+            A ray is a a combination of a fixed point on a coordinate system (the origin)
+            and a scalable vector direction. Thy can be represented for our purposed using
+            two vectors; on for the origin and one for the direction with the origin vector that
+            has its tail on the global origin and the direction vector that has its tail on the
+            tip of the origin vector. Since the origin is a fixed point this means that rays
+            that have the same direction with different origins are not the same ray unlike vectors.
+            The parametric equation that defines a ray is given by:
+            <span class="eq">
+                <b><i>p</i></b> = <b><i>o</i></b> + &alpha;<b><i>d</i></b>
+            </span> where <b class="eq"><i>p</i></b>
+            is a point on the ray, <b class="eq"><i>o</i></b> is the origin, <b class="eq"><i>d</i></b>
+            is the direction unit vector, and &alpha; is is the distance from the origin that point is at along
+            the direction vector. Using vector notation and some linear interpolation, we can represent
+            the ray by the following equation:
+            <span class="eq">
+                <b><i>p<sub>1</sub></i></b> + &alpha;(<b><i>p<sub>2</sub></i> - </b><b><i>p<sub>1</sub></i></b>)
+            </span> or in a more concise form:
+            <span class="eq">
+                <b><i>p<sub>1</sub></i></b> + &alpha;<b><i>d</i></b>
+            </span> where
+            <span class="eq">
+                <b><i>d</i></b> = (<b><i>p<sub>2</sub></i> - </b><b><i>p<sub>1</sub></i></b> /
+                ||<b><i>p<sub>2</sub></i> - </b><b><i>p<sub>1</sub></i></b>||)
+            </span>
+
+            <img src="../../assets/img/ray_def.svg" alt="ray definition" class="img-white-bg-card">
+        </p><br>
+
+        <h2>Linear Interpolation (weighted average)</h2>
+        <p>
+            Linear interpolation, or lerp, is a way of taking a some percentage of two points to find the distance
+            between them. If we let &alpha; represent a percentage between 0% and 100% then the equation
+            to represent the lerp between two points is defined by: <br>
+            <span class="eq">
+                &alpha; + (1 - &alpha;) = 1
+            </span><br>.
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/LinearInterpolation.svg/1200px-LinearInterpolation.svg.png"
+                alt="linear interpolation (credit to: https://en.wikipedia.org/wiki/Linear_interpolation)"
+                class="img-white-bg-card">
+        </p><br>
+
+        <h2>Implicit Equations and Spheres</h2>
+        <p>
+            An implicit surface is a surface which is defined by an equation that will be satisfied
+            by any point on te surface, and that  the equation is not solved for any of the variables.
+            This the best way o represent a circle, or in 3 dimensions a sphere. The equation for a circle
+            with some center <span class="eq">(a, b)</span> and radius <span class="eq">r</span> in the
+            can be expressed by: <br>
+            <span class="eq">
+                (x - a)<sup>2</sup> + (y - b)<sup>2</sup> = r<sup>2</sup>
+            </span>. This form is not very useful since we are representing the ray using vectors, so
+            using vector notation we find that spheres can also be defined as: <br>
+            <span class="eq">
+                <b><i>e</i></b> = <b><i>p</i></b> - <b><i>c</i></b>
+            </span> where <b class="eq"><i>e</i></b> is the radius of the circle, <b class="eq"><i>p</i></b>
+            is any point on the circle, and <b class="eq"><i>c</i></b> is the enter of the circle.
+
+            <img src="../../assets/img/circle_def.svg" alt="circle def" class="img-white-bg-card">
+        </p><br>
+
+
+        <h2>Ray/Cirlce Intersections</h2>
+        <p>
+            Using the vector equations for both the ray and the circle, we can now solve to find where, if anywhere,
+            along the ray they intersect. We will be solving for the &alpha; in the following equation which is
+            a combination of the definitions of a ray and a circle: <br>
+            <span class="eq">
+                ||&alpha;<b><i>d</i></b> + <b><i>o</i></b> - <b><i>c</i></b>|| = r
+            </span>. If we expand this equation we by squaring both sides and simplifying, we are left
+            with a quadratic equation in which &alpha; can be found using the quadratic formula: <br>
+            <span class="eq">
+                &alpha; = (-b + sqrt(b<sup>2</sup> - 4ac)) / 2a
+            </span> where
+            <span class="eq">
+                a = <b><i>d</i></b> * <b><i>d</i></b> = 1
+            </span> since <b><i>d</i></b> is a unit vector, <br>
+            <span class="eq">
+                b = 2<b><i>d</i></b> * (<b><i>o</i></b> - <b><i>c</i></b>)
+            </span>, and
+            <span class="eq">
+                c = (<b><i>o</i></b> - <b><i>c</i></b>) * (<b><i>o</i></b> - <b><i>c</i></b>) - r<sup>2</sup>
+            </span>. The image below show possible values for ray intersections using
+            <span class="eq">t0, t1</span> instead of <span class="eq">&alpha;</span>
+
+
+            <img src="https://www.scratchapixel.com/images/upload/ray-simple-shapes/rayspherecases.png?"
+                 alt="ray/circle intersections (credit to: https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection)"
+                 class="img-white-bg-card">
+        </p><br>
+
+        <h3>Image Sources</h3>
+        <ol>
+            <li><a  href="https://en.wikipedia.org/wiki/Linear_interpolation">Linear Interpolation</a></li>
+            <li><a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection">
+                Ray/circle Intersections</a>
+            </li>
+        </ol>
+    </div>
+</body>
