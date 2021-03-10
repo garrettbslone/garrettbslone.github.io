@@ -5,9 +5,10 @@ description: Mathematical Foundations 1.
 ---
 
 <body>
-    <div class="content-border">
+<div class="content-border">
+    <div class="content-group">
         <h2>Vectors in R<sup>2</sup> and R<sup>3</sup></h2>
-        <p>
+        <p>>
             This week we learned about vectors in 2/3 dimensional space.
             We are taking a more geometric and physics based approach as opposed
             to an abstract mathematical approach.
@@ -16,44 +17,64 @@ description: Mathematical Foundations 1.
             some magnitude (length) and direction relative towards the coordinate axes.
             Since this vector is just this displacement,
             it can be translated anywhere in the coordinate system and be the same vector.
+        </p>
+        <div class="img-grid-box">
             <img src="https://dr282zn36sxxg.cloudfront.net/datastreams/f-d%3A117b3917dd62f58e4dcee0aaf455f33b70d615e42b2d02c871ec0955%2BIMAGE_TINY%2BIMAGE_TINY.1"
-                alt="vector equality (credit to: https://www.ck12.org/book/ck-12-trigonometry-second-edition/section/5.6/)"
+                 alt="vector equality (credit to: https://www.ck12.org/book/ck-12-trigonometry-second-edition/section/5.6/)"
                  class="img-white-bg-card">
-        </p><br>
+        </div>
+    </div>
+    <br>
 
+    <div class="content-group">
         <h2>Vector Addition</h2>
         <p>
             This definition becomes very useful for basic operations like adding two vectors together.
             This can be accomplished by placing the tail of one vector at the tip of the other and then drawing the
             vector that goes from the tail of the first o the tip of the second. Also, addition of these vectors is
             commutative meaning that <b><i>a</i></b> + <b><i>b</i></b> = <b><i>b</i></b> + <b><i>a</i></b>.
+        </p>
+        <div class="img-grid-box">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-wzZ-jRuaozPYGluWB7BZyRtiIT1qzU00bQ&usqp=CAU"
                  alt="vector addition (credit to: https://www.henhudschools.org/cms/lib/NY01813707/Centricity/Domain/263/U1%20L2%20done%20on%20Jan%2016th.pdf)"
                  class="img-white-bg-card">
-        </p><br>
+        </div>
+    </div>
+    <br>
 
+    <div class="content-group">
         <h2>Vector Scaling</h2>
         <p>
             Vectors can also be multiplied by scalars or scaled by some factor. This can done by multiplying the
             scalar through to each component, and is one way to help think about vector subtraction. You
             can scale a vector by negative on then add it to another vector meaning that
             <b><i>a</i></b> - <b><i>b</i></b> = <b><i>b</i></b> + (-1) * <b><i>a</i></b>.<br>
+        </p>
+        <div class="img-grid-box">
             <img src="https://math.libretexts.org/@api/deki/files/7510/CNX_Precalc_Figure_08_08_007.jpg?revision=1&size=bestfit&width=399&height=301"
                  alt="vector scaling (credit to: https://math.libretexts.org/Bookshelves/Precalculus/Book%3A_Precalculus_(OpenStax)/08%3A_Further_Applications_of_Trigonometry/8.08%3A_Vectors)"
                  class="img-white-bg-card">
-        </p><br>
+        </div>
+    </div>
+    <br>
 
+    <div class="content-group">
         <h2>Vector Length</h2>
         <p>
             The length of a vector, also called the magnitude, is the distance from the tail to the tip.
             This can be found using the Pythagorean theorem by making the vector itself the hypotenuse and
             each component another side of the triangle. This can the be expanded to three dimensions by
             adding a third component. The length is denoted as length(<b><i>a</i></b>) = ||<b><i>a</i></b>||.
+        </p>
+        <div class="img-grid-box">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSQMhOPVXj0w3DpuXidzkmmcZSZnXQpCypiQ&usqp=CAU"
                  alt="vector length (credit to: https://avikdas.com/build-your-own-raytracer/02-intersection-tests/vector-norms-and-dot-products.html)"
                  class="img-white-bg-card">
-        </p><br>
+        </div>
+    </div>
+    <br>
 
+    <div class="content-group">
         <h2>Vector Normalization and Unit Vectors</h2>
         <p>
             Vector normalization is the process of normalizing a vector or scaling that vector so that it has a
@@ -61,11 +82,16 @@ description: Mathematical Foundations 1.
             over it, also called a 'hat'. This is done by scaling the vector by the reciprocal of the length
             meaning that the unit vector for som vector <b><i>a</i></b> = <b><i>a</i></b> * (1 / ||<b><i>a</i></b>||).
             This process is very useful for representing vectors in different coordinate spaces.
+        </p>
+        <div class="img-grid-box">
             <img src="https://www.tutorialexample.com/wp-content/uploads/2019/11/vector-normalization.png"
                  alt="vector normalization (credit to: https://www.tutorialexample.com/unit-normalize-a-tensorflow-tensor-a-practice-guide-tensorflow-tips/)"
                  class="img-white-bg-card">
-        </p><br>
+        </div>
+    </div>
+    <br>
 
+    <div class="content-group">
         <h2>Vector Dot Product and projection</h2>
         <p>
             The dot product is one of the multiplication-like operations that can be performed on two vectors.
@@ -74,38 +100,43 @@ description: Mathematical Foundations 1.
             <b><i>a</i></b> * <b><i>b</i></b> = a<sub>x</sub> * b<sub>x</sub> + a<sub>y</sub> * b<sub>y</sub>.
             Interestingly the length of a vector can be described as the square root of it dotted with itself meaning
             length(<b><i>a</i></b>) = sqrt(<b><i>a</i></b> * <b><i>a</i></b>). Vector projection is a way of
-            expressing changing the direction of a vector to be parallel to another. In other words we can take a vector,
+            expressing changing the direction of a vector to be parallel to another. In other words we can take a
+            vector,
             say <b><i>a</i></b>, and project it onto (or in the direction of) another vector, say <b><i>b</i></b>.
             The resultant vector, lest call it <b><i>c</i></b>, has the same magnitude of <b><i>a</i></b> but
             is now in the direction of <b><i>b</i></b>. This can be done by multiplying <b><i>a</i></b> by
             a unit vector in the direction of <b><i>b</i></b>.
+        </p>
+        <div class="img-grid-box">
             <img src="https://lh3.googleusercontent.com/proxy/rhmhvxGJT3jJNHLqlIyZj1SAkMHAG4TYBPSdpTV0XF3n850NJeDKpNaPZ826vufIUG6Equ3NvMjTrZOl9-1LVf8ZwPJKPrassJnfxxNwUhDedtW6E9fJQQqZ8BFBWhigWwH-3USOcnK8KSJP"
                  alt="vector dot product (credit to: http://www.labbookpages.co.uk/audio/beamforming/delayCalc.html)"
                  class="img-white-bg-card">
-        </p><br>
-
-        <h3>Image Sources</h3>
-        <ol>
-            <li>
-                <a href="https://www.ck12.org/book/ck-12-trigonometry-second-edition/section/5.6/">
-                    Vector Equality</a>
-            </li>
-            <li>
-                <a href="https://www.henhudschools.org/cms/lib/NY01813707/Centricity/Domain/263/U1%20L2%20done%20on%20Jan%2016th.pdf">
-                    Vector Addition</a>
-            </li>
-            <li>
-                <a href="https://math.libretexts.org/Bookshelves/Precalculus/Book%3A_Precalculus_(OpenStax)/08%3A_Further_Applications_of_Trigonometry/8.08%3A_Vectors">
-                    Vector Scaling</a>
-            </li>
-            <li>
-                <a href="https://www.tutorialexample.com/unit-normalize-a-tensorflow-tensor-a-practice-guide-tensorflow-tips/">
-                    Vector Normalization</a>
-            </li>
-            <li>
-                <a href="http://www.labbookpages.co.uk/audio/beamforming/delayCalc.html">
-                    Vector Dot Product and Projection</a>
-            </li>
-        </ol>
+        </div>
     </div>
+    <br>
+
+    <h3>Image Sources</h3>
+    <ol>
+        <li>
+            <a href="https://www.ck12.org/book/ck-12-trigonometry-second-edition/section/5.6/">
+                Vector Equality</a>
+        </li>
+        <li>
+            <a href="https://www.henhudschools.org/cms/lib/NY01813707/Centricity/Domain/263/U1%20L2%20done%20on%20Jan%2016th.pdf">
+                Vector Addition</a>
+        </li>
+        <li>
+            <a href="https://math.libretexts.org/Bookshelves/Precalculus/Book%3A_Precalculus_(OpenStax)/08%3A_Further_Applications_of_Trigonometry/8.08%3A_Vectors">
+                Vector Scaling</a>
+        </li>
+        <li>
+            <a href="https://www.tutorialexample.com/unit-normalize-a-tensorflow-tensor-a-practice-guide-tensorflow-tips/">
+                Vector Normalization</a>
+        </li>
+        <li>
+            <a href="http://www.labbookpages.co.uk/audio/beamforming/delayCalc.html">
+                Vector Dot Product and Projection</a>
+        </li>
+    </ol>
+</div>
 </body>
