@@ -1,0 +1,731 @@
+---
+layout: default
+title: "Weeks 6 & 7"
+description: "Mathematical Foundations 2: Matrices."
+---
+
+<body>
+<div class="content-border">
+    <div class="content-group">
+        <h2>What Are Matrices?</h2>
+        <p>
+            What is a matrix? Well, simply put, matrices are a structured way of grouping numbers together by
+            creating a rectangular arrangement where each number can be referenced by a an index. They contain
+            any number of rows and columns (usually denoted as $m$ rows and $n$ columns). So if we have some matrix
+            $A$ that has dimension $m\times n$ (that is it has $m$ rows and $n$ columns), then we can find
+            any item in $A$ via $A_{ij}$ for any item at the $i^{th}$ row and $j^{th}$ column.
+        </p>
+        <div class="eq latex latex-30">
+            $$A =
+            \begin{bmatrix}
+            a_{11} & a_{12} & ... & a_{1n} \\
+            a_{21} & a_{22} & ... & a_{3n} \\
+            ... & ... & ... & ... \\
+            a_{m1} & a_{m2} & ... & a_{mn} \\
+            \end{bmatrix}$$
+        </div>
+        <p>
+            That's pretty abstract so let's take an example with a $4\times 4$ matrix. In the following example
+            if we want to find the element at the third row and second column we would find:
+            <span class="eq">
+                $A_{32} = 3$
+            </span>.
+        </p>
+        <div class="eq latex latex-30">
+            $$A =
+            \begin{bmatrix}
+            9 & 2 & 3 & 47 \\
+            9 & 3 & 8 & 81 \\
+            1 & 3 & 4 & 2 \\
+            5 & 32 & 55 & 0 \\
+            \end{bmatrix}$$
+        </div>
+        <p>
+            In code there are multiple ways that we could represent an $m\times n$ matrix, but there are two main
+            ways: 1) using one single array of size $m * n * size\ of\ element$ or 2) using an array of $m$ arrays of
+            $n * size\ of\ element$. Both have their uses, but we will use the first method to represent our matrices,
+            and all arrays start a 0 in the code, but the matrices will be starting at 1.
+        </p>
+    </div>
+    <br>
+
+    <div class="content-group">
+        <h2>Matrix Basics</h2>
+        <p>
+            Now that we've see what a matrix is, we need to define a few operations and standard matrices. Let's
+            by defining two standard matrices that will be necessary for some of the operations: the <b>Identity
+            Matrix</b> and the <b>Zero Matrix</b> (also called the zero vector). The identity matrix is to matrices
+            what the number 1 is to real numbers. That is that any matrix multiplied by the identity matrix will not
+            change the original matrix, and it is defined by as an $m\times m$ matrix where every element on the
+            diagonal is 1 and every other element is 0 and is denoted as $I$. So in a $4\times 4$ matrix it looks like:
+        </p>
+        <div class="eq latex latex-30">
+            $$I =
+            \begin{bmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 0 \\
+            0 & 0 & 1 & 0 \\
+            0 & 0 & 0 & 1 \\
+            \end{bmatrix}$$
+        </div>
+        <p>
+            The zero matrix is exactly what it sounds like, a matrix where every element is 0. This matrix can be
+            added to any other matrix and not change the original matrix. It is denoted as $O$ and
+            in $4\times 4$ looks like:
+        </p>
+        <div class="eq latex latex-30">
+            $$O =
+            \begin{bmatrix}
+            0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 \\
+            \end{bmatrix}$$
+        </div>
+        <br>
+        <div class="content-group">
+            <h3> - Addition and Subtraction</h3>
+            <p>
+                Addition and subtraction function identically so I'll just cover addition here. Addition for matrices
+                is the same as adding two vectors together. All you have to do is add the components from both
+                matrices at each index together. It is important to note that addition is associative and commutative;
+                meaning that order doesn't matter and direction doesn't matter =>
+                <span class="eq">
+                    $(A + B) + C = A + (B + C)$
+                </span> and
+                <span class="eq">
+                    $A + B = B + A$
+                </span>.
+                So let's take a look at an example with two $4\times 4$ matrices $A$ and $B$.
+            </p>
+            <div class="eq latex latex-55">
+                $$Let\ A =
+                \begin{bmatrix}
+                9 & 2 & 3 & 47 \\
+                9 & 3 & 8 & 81 \\
+                1 & 3 & 4 & 2 \\
+                5 & 32 & 55 & 0 \\
+                \end{bmatrix},
+
+                B =
+                \begin{bmatrix}
+                2 & 2 & 3 & 1 \\
+                1 & 83 & 8 & 7 \\
+                54 & 73 & 47 & 2 \\
+                9 & 32 & 55 & 44 \\
+                \end{bmatrix}$$
+
+                $$\Rightarrow A + B =
+                \begin{bmatrix}
+                9 + 2 & 2 + 2 & 3 + 3 & 47 + 1\\
+                9 + 1 & 3 + 83 & 8 + 8 & 81 + 7 \\
+                1 + 54 & 3 + 73 & 4 + 47 & 2 + 2 \\
+                5 + 9 & 32 + 32 & 55 + 55 & 0 + 44 \\
+                \end{bmatrix}$$
+                $$= \begin{bmatrix}
+                11 & 4 & 6 & 48\\
+                10 & 86 & 16 & 88 \\
+                55 & 76 & 51 & 4 \\
+                14 & 64 & 110 & 44 \\
+                \end{bmatrix}$$
+            </div>
+        </div>
+        <br>
+        <div class="content-group">
+            <h3> - Scalar Multiplication</h3>
+            <p>
+                Scalar multiplication for matrices is the same as scalar multiplication for vectors. To multiply
+                a matrix by a scalar just multiply the scalar to each component. One thing to note is that scalar
+                multiplication is both associative and commutative =><br>
+                <span class="eq">
+                    $(cd)A = c(dA)$
+                </span> and
+                <span class="eq">
+                    $cA = Ac$
+                </span>. Now let's take a look at an example with a $4\times 4$ matrix $A$ and a scalar $c$.
+            </p>
+            <div class="eq latex latex-55">
+                $$Let\ A =
+                \begin{bmatrix}
+                9 & 2 & 3 & 47 \\
+                9 & 3 & 8 & 81 \\
+                1 & 3 & 4 & 2 \\
+                5 & 32 & 55 & 0 \\
+                \end{bmatrix},
+
+                c = 3$$
+
+                $$\Rightarrow cA =
+                \begin{bmatrix}
+                3 \cdot 9 & 3 \cdot 2 & 3 \cdot 3 & 3 \cdot 47 \\
+                3 \cdot 9 & 3 \cdot 3 & 3 \cdot 8 & 3 \cdot 81 \\
+                3 \cdot 1 & 3 \cdot 3 & 3 \cdot 4 & 3 \cdot 2 \\
+                3 \cdot 5 & 3 \cdot 32 & 3 \cdot 55 & 3 \cdot 0 \\
+                \end{bmatrix}$$
+                $$= \begin{bmatrix}
+                27 & 6 & 9 & 141 \\
+                27 & 9 & 24 & 243 \\
+                3 & 9 & 12 & 6 \\
+                15 & 96 & 165 & 0 \\
+                \end{bmatrix}$$
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="content-group">
+        <h2>Matrix Vector Multiplication</h2>
+        <p>
+            Up until now operations on matrices have looked basically the same as they do for vectors. However,
+            matrix multiplication is not nearly as simple as just multiplying the numbers at each index for the
+            two matrices. To begin and help form an understanding how we define matrix multiplication
+            th way we do, we'll start with matrix vector multiplication. In order to to multiply a vector by a
+            matrix (i.e. matrix * vector), the vector must be of the same dimension of the $n$ columns. This is
+            because of how we are going to define multiplication in this space. We define it by saying if
+            $A$ is an $m\times n$ matrix and $\vec v$ is an $n$ dimensional vector then the result
+            of $A\vec v$ is an m dimensional vector $\vec u$ such that each
+            element of $\vec u$ is equal to the dt product of $\vec v$ and the $i^{th}$
+            row of $A$. It is SUPER IMPORTANT to remember that matrix vector multiplication is
+            <b><u>NOT</u></b> commutative, so =>
+            <span class="eq">
+                $A\vec v \neq \vec vA$
+            </span>. In fact because of the way we defined it, doing $\vec vA$ doesn't even
+            make any sense. Now that we have a definition let's take a look at an example with a $4\times 4$
+            matrix and a $4$ dimensional vector to help explain and understand what that means.
+        </p>
+        <div class="eq latex latex-55">
+            $$Let\ A =
+            \begin{bmatrix}
+            1 & 2 & 3 & 1 \\
+            4 & 0 & 8 & 8 \\
+            1 & 3 & 4 & 2 \\
+            5 & 0 & 6 & 0 \\
+            \end{bmatrix},
+
+            \vec v = \langle1, 2, 3, 1\rangle
+            = \begin{bmatrix}
+            1 \\
+            2 \\
+            3 \\
+            1 \\
+            \end{bmatrix}$$
+
+            $$\Rightarrow A\vec v =
+            \begin{bmatrix}
+            1 & 2 & 3 & 1 \\
+            4 & 0 & 8 & 8 \\
+            1 & 3 & 4 & 2 \\
+            5 & 0 & 6 & 0 \\
+            \end{bmatrix}
+            \begin{bmatrix}
+            3 \\
+            0 \\
+            1 \\
+            4 \\
+            \end{bmatrix}$$
+
+            $$= \begin{bmatrix}
+            1 \cdot 3 + 2 \cdot 0 + 3 \cdot 1 + 1 \cdot 4 \\
+            4 \cdot 3 + 0 \cdot 0 + 8 \cdot 1 + 8 \cdot 4 \\
+            1\cdot 3 + 3 \cdot 0 + 4 \cdot 1 + 2 \cdot 4 \\
+            5 \cdot 3 + 0 \cdot 0 + 6 \cdot 1 + 0 \cdot 4 \\
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            10 \\
+            52 \\
+            15 \\
+            20 \\
+            \end{bmatrix}$$
+        </div>
+        <p>
+            Some pseudo code for this looks something like: (assuming that we are using a singular array to represent
+            our $4\times 4$ matrix).
+        </p>
+        <div class="eq">
+            <pre>// This function is part of the Matrix4 class</pre>
+            <pre>function multiplyVector(v) {</pre>
+            <pre>   Make sure this matrix can be multiplied by v // is a 4D vector</pre>
+            <pre>   Get each row from this matrix and turn it into a Vector4</pre>
+            <pre>   Dot v with each row and store the results in a new Vector4 and return it</pre>
+            <pre>}</pre>
+        </div>
+    </div>
+    <br>
+
+    <div class="content-group">
+        <h2>Matrix Matrix Multiplication</h2>
+        <p>
+            We just learned how to multiply a matrix by a vector, but how about a matrix with another matrix?
+            Well, one thing to point out is that a vector is also a matrix. In our example before we multiplied
+            a $4\times 4$ matrix with a $4\times 1$ matrix resulting in another $4\times 1$ matrix. So if we think more
+            generally about what a matrix is, we can think of each column itself as a vector, or a column vector.
+            Now in order to multiply an $m\times n$ matrix $A$ with an $n\times l$ matrix $B$ (i.e. $AB$)
+            we can get the resulting $m\times l$ matrix by taking the first row of $A$ and dotting it with each
+            column vector from $B$ and repeat that with each row in $A$. Again this is
+            a rather abstract and confusing definition so we'll take a look at an example in just a minute. For the
+            most part all of the matrix matrix multiplications we'll be handling will be between two square matrices,
+            so if they are the same size then they can be multiplied. It is SUPER IMPORTANT to remember that
+            matrix matrix multiplication is <b><u>NOT</u></b> commutative, so =><br>
+            <span class="eq">
+                $AB \neq BA$
+            </span>. However, it is associative so =>
+            <span class="eq">
+                $A(BC) = (AB)C$
+            </span>. Now let's take a look at an example with two $4\times 4$ matrices.
+        </p>
+        <div class="eq latex latex-100">
+            $$Let\ A =
+            \begin{bmatrix}
+            1 & 2 & 3 & 1 \\
+            4 & 0 & 1 & 4 \\
+            1 & 3 & 4 & 2 \\
+            3 & 0 & 2 & 0 \\
+            \end{bmatrix},
+
+            B =
+            \begin{bmatrix}
+            0 & 2 & 3 & 1 \\
+            4 & 1 & 1 & 2 \\
+            1 & 3 & 4 & 2 \\
+            0 & 2 & 1 & 0 \\
+            \end{bmatrix}$$
+
+            $$\Rightarrow AB =$$
+
+            $$\begin{bmatrix}
+            1 \cdot 0 + 2 \cdot 4 + 3 \cdot 1 + 1 \cdot 0 & 1 \cdot 2 + 2 \cdot 1 + 3 \cdot 3 + 1 \cdot 2 &
+            1 \cdot 3 + 2 \cdot 1 + 3 \cdot 4 + 1 \cdot 2 & 1 \cdot 1 + 2 \cdot 2 + 3 \cdot 2 + 1 \cdot 0 \\
+
+            4 \cdot 0 + 0 \cdot 4 + 1 \cdot 1 + 4 \cdot 0 & 4 \cdot 2 + 0 \cdot 1 + 1 \cdot 3 + 4 \cdot 2 &
+            4 \cdot 3 + 0 \cdot 1 + 1 \cdot 4 + 4 \cdot 2 & 4 \cdot 1 + 0 \cdot 2 + 1 \cdot 2 + 4 \cdot 0 \\
+
+            1 \cdot 0 + 3 \cdot 4 + 4 \cdot 1 + 2 \cdot 0 & 1 \cdot 2 + 3 \cdot 1 + 4 \cdot 3 + 2 \cdot 2 &
+            1 \cdot 3 + 3 \cdot 1 + 4 \cdot 4 + 2 \cdot 2 & 1 \cdot 1 + 3 \cdot 2 + 4 \cdot 2 + 2 \cdot 0 \\
+
+            3 \cdot 0 + 0 \cdot 4 + 2 \cdot 1 + 0 \cdot 0 & 3 \cdot 2 + 0 \cdot 1 + 2 \cdot 3 + 0 \cdot 2 &
+            3 \cdot 4 + 0 \cdot 1 + 2 \cdot 4 + 0 \cdot 2 & 3 \cdot 1 + 0 \cdot 2 + 2 \cdot 2 + 0 \cdot 0 \\
+            \end{bmatrix}$$
+
+            $$=
+            \begin{bmatrix}
+            11 & 15 & 18 & 11 \\
+            1 & 19 & 20 & 6 \\
+            16 & 21 & 24 & 15 \\
+            2 & 12 & 17 & 7 \\
+            \end{bmatrix}$$
+        </div>
+        <p>
+            The pseudocode for how I implemented this function looks like this:
+        </p>
+        <div class="eq">
+            <pre>function multiply(rightSideMatrix) {</pre>
+            <pre>   Get a new FloatArray of length 16 to store result</pre>
+            <pre>   for (i -> 16) {</pre>
+            <pre>       Get the index offset for rsm i % row length // tells us if we are on a new row as well</pre>
+            <pre>       if (We are on a new row) {</pre>
+            <pre>           Set the row vector to the current row</pre>
+            <pre>       }</pre>
+            <pre>       Get the current column from rsm using the offset index</pre>
+            <pre>       Set the result at i to the dot product of row and column </pre>
+            <pre>   }</pre>
+            <pre>   Assign the result array to this matrix and return it</pre>
+            <pre>}</pre>
+        </div>
+    </div>
+    <br>
+
+    <div class="content-group">
+        <h2>Transformations</h2>
+        <p>
+            There are two main types of transformations we will be dealing with: <b><i>Linear</i></b> and
+            <b><i>Affine</i></b>. Linear transformations are transformations that map between vector spaces
+            preserving vector addition and scalar multiplication. That means that they change how we see vectors
+            in some way, and they are guaranteed to preserver the origin, lines, parallelism, and ratio of
+            distances. These transformations are useful for things like, scaling and rotating, but they don't
+            allow for us to do translations! So how do we move stuff around on the screen then? We use affine
+            transformations. Affine transformations are a super-set of Linear transformations with one key
+            difference: the origin may not be preserved. This allows for translations! Now, since we are working
+            in $3D$ space why have I been doing examples with $4\times 4$ matrices? It's because of something called
+            <b><i>Homogenous Coordinates</i></b>. Homogeneous coordinates allow us to add another dimension
+            "homogeneously" and allow for us to represent <b><u>All</u></b> of our necessary transformations
+            using a singular sized matrix $(4\times 4)$. This $4_{th}$ "dimension" usually called $w$ is not
+            a spatial dimension, but can effect the scaling of images, so we will use it to represent wether or not
+            we are using our Vector4 to is a point $(w = 1)$ or a vector $(w = 0)$. The reasoning for a vector
+            to have a homogenous coordinate of $0$ is because they are <b><u>Relative</u></b>; they are a
+            displacement defined in a reference frame thus being able to move their "origin" wouldn't make sense.
+        </p>
+        <div class="img-flex-wrap">
+            <div class="img-grid-box dual-grid-box-img">
+                <p>Affine Transformation Leaf</p>
+                <img class="img-white-bg-card sq"
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Fractal_fern_explained.png/200px-Fractal_fern_explained.png"
+                     alt="Affine Transformation (credit to: https://en.wikipedia.org/wiki/Affine_transformation)">
+            </div>
+            <div class="img-grid-box dual-grid-box-img">
+                <p>Types of Affine Transformations</p>
+                <img class="img-white-bg-card sq" src="https://people.gnome.org/~mathieu/libart/art-affines.png"
+                     alt="Affine Transformation (credit to: https://people.gnome.org/~mathieu/libart/libart-affine-transformation-matrices.html)">
+            </div>
+        </div>
+
+
+        <div class="content-group">
+            <h3>1) Scaling</h3>
+            <p>
+                Scaling is a type of linear transformation where a vector or point can be scaled in any of the
+                $x$, $y$, or $z$ directions by some scalar values $x$, $y$, and $z$.
+            </p>
+            <div class="img-flex-wrap">
+                <div class="img-grid-box">
+                    <p>Scaling</p>
+                    <img class="img-white-bg-card"
+                         src="https://media.geeksforgeeks.org/wp-content/uploads/transformation.png"
+                         alt="Scaling (credit to: https://www.geeksforgeeks.org/2d-transformation-in-computer-graphics-set-1-scaling-of-objects/_">
+                </div>
+            </div>
+            <p>
+                The $4\times 4$ matrix that allows for a point or vector to be scaled in $3D$ space is the
+                diagonal matrix defined below.
+            </p>
+            <div class="eq latex latex-30">
+                $$S =
+                \begin{bmatrix}
+                x & 0 & 0 & 0 \\
+                0 & y & 0 & 0 \\
+                0 & 0 & z & 0 \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+            </div>
+        </div>
+        <br>
+
+        <div class="content-group">
+            <h3>2) Rotation</h3>
+            <p>
+                Rotations are a type of linear transformation that allow a vector or a point to rotated around
+                and axis; they allow the vector/point to have the it's basis vectors changed and be facing
+                in a new direction.
+            </p>
+            <div class="img-flex-wrap">
+                <div class="img-grid-box">
+                    <p>Rotation</p>
+                    <img class="img-white-bg-card"
+                         src="https://mathbitsnotebook.com/Geometry/Transformations/RotPic.jpg"
+                         alt="Rotation (credit to: https://mathbitsnotebook.com/Geometry/Transformations/TRTransformationRotations.html)">
+                </div>
+            </div>
+            <p>
+                For performing rotations we will be using what are known as Euler Angles. They are a set of three
+                angles, often denoted with $\phi$, $\theta$ , & $\psi$ or $roll$, $pitch$, & $yaw$ that can be
+                used to describe any rotation in $3D$ space. The order in which the rotations are performed does
+                mater as each successive rotation will alter any following rotations.
+            </p>
+            <div class="img-flex-wrap">
+                <div class="img-grid-box">
+                    <p>Euler Angles</p>
+                    <img class="img-white-bg-card"
+                         src="https://mathworld.wolfram.com/images/eps-gif/EulerAngles_600.gif"
+                         alt="Euler Angles (credit to: https://mathworld.wolfram.com/EulerAngles.html">
+                </div>
+            </div>
+            <p>
+                One drawback to defining our reference frame with Euler angles is that it is possible for more
+                than one of the rotations to be locked in the same axial plane, and therefore losing a degree of
+                freedom (or a posibile direction of movement). This phenomenon is called a Gimbal Lock.
+            </p>
+            <div class="img-flex-wrap">
+                <div class="img-grid-box">
+                    <p>Gimbal Lock</p>
+                    <img class="img-white-bg-card"
+                         src="https://www.researchgate.net/profile/Julian-Zeitlhoefler/publication/338835648/figure/fig4/AS:865379593252879@1583333981731/llustrates-the-principle-of-gimbal-lock-The-outer-blue-frame-represents-the-x-axis-the.png"
+                         alt="Gimbal Lock (credit to: https://www.researchgate.net/figure/llustrates-the-principle-of-gimbal-lock-The-outer-blue-frame-represents-the-x-axis-the_fig4_338835648">
+                </div>
+            </div>
+            <p>
+                Each one of these rotations can be expressed a rotation matrix based on some input angle. For the
+                following $4\times 4$ matrices let's assume the rotation around the $z-axis$ will be by some
+                angle $\phi$, the $x-axis$ by $\theta$, and the $y-axis$ by $\psi$.
+            </p>
+            <div class="eq latex latex-55">
+                $$R_x =
+                \begin{bmatrix}
+                1 & 0 & 0 & 0 \\
+                0 & cos\theta & -sin\theta & 0 \\
+                0 & sin\theta & cos\theta & 0 \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+
+                $$R_y =
+                \begin{bmatrix}
+                cos\psi & 0 & sin\psi & 0 \\
+                0 & 1 & 0 & 0 \\
+                -sin\psi & 0 & cos\psi & 0 \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+
+                $$R_z =
+                \begin{bmatrix}
+                cos\phi & -sin\phi & 0 & 0 \\
+                sin\phi & cos\phi & 0 & 0 \\
+                0 & 0 & 1 & 0 \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+            </div>
+        </div>
+        <br>
+
+        <div class="content-group">
+            <h2>3) Translation</h2>
+            <p>
+                Translation is an affine transformation that moves a vector or point a constant distance in physical
+                space.
+                In three dimensions it can be thought of as moving the point or vector along the $x-axis$ by $x$,
+                $y-axis$ by $y$, and $z-axis$ by $z$.
+            </p>
+            <div class="img-flex-wrap">
+                <div class="img-grid-box">
+                    <p>Translation</p>
+                    <img class="img-white-bg-card"
+                         src="https://www.onlinemathlearning.com/image-files/translation-g5.jpg"
+                         atl="Translation (credit to: https://www.onlinemathlearning.com/geometry-grade5.html)">
+                </div>
+            </div>
+            <p>
+                The $4\times 4$ matrix representation for $3D$ space is defined as the following diagonal matrix.
+            </p>
+            <div class="eq latex latex-30">
+                $$T =
+                \begin{bmatrix}
+                1 & 0 & 0 & x \\
+                0 & 1 & 0 & y \\
+                0 & 0 & 1 & z \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+            </div>
+        </div>
+        <br>
+
+        <div class="content-group">
+            <h2>4) Perspective Projection</h2>
+            <p>
+                Perspective Projection is a transformation that squished $3D$ objects down into a $2D$ plane.
+                It takes lines that are parallel in the $3D$ reference frame and causes them to all approach
+                a single vanishing point. It produces realistic views, but it doesn't preserve the object
+                proportions or relative dimensions.
+            </p>
+            <div class="img-flex-wrap">
+                <div class="img-grid-box">
+                    <p>Perspective Projection</p>
+                    <img class="img-white-bg-card"
+                         src="https://webglfundamentals.org/webgl/lessons/resources/perspective-example.svg"
+                         alt="Perspective Projection (credit to: https://webglfundamentals.org/webgl/lessons/webgl-3d-perspective.html)">
+                </div>
+            </div>
+            <p>
+                We can do this by creating a bounding box, or frustum,
+                around the scene. This box will contain a a top, bottom, left, right, front, and back. We
+                will also need a vertical field of view help us calculate where the top (and therefore bottom)
+                planes are situated. We will also need an aspect ratio for the scene which defines a ratio of
+                the ${width}\frac{height}$. From this and the top we can calculate the distance of the right
+                (and therefore left) walls.
+            </p>
+            <div class="img-flex-wrap">
+                <div class="img-grid-box">
+                    <p>Perspective Projection Reference Frame</p>
+                    <img class="img-white-bg-card"
+                         src="https://media.geeksforgeeks.org/wp-content/uploads/20200720100832/Perspective.png"
+                         alt="Perspective Projection (credit to: https://www.geeksforgeeks.org/perspective-projection-and-its-types/)">
+                </div>
+            </div>
+            <p>
+                The $4\times 4$ matrix representation of this projection is defined below.
+            </p>
+            <div class="eq latex latex-55">
+                $$P =
+                \begin{bmatrix}
+                \frac{near}{right} & 0 & 0 & 0 \\
+                0 & \frac{near}{top} & 0 & 0 \\
+                0 & 0 & - \frac{far\ +\ near}{far\ -\ near} & -2 \frac{far\ \cdot \ near}{far\ -\ near} \\
+                0 & 0 & -1 & 0 \\
+                \end{bmatrix}$$
+            </div>
+        </div>
+        <br>
+
+        <div class="content-group">
+            <h2>5) Orthographic Projection</h2>
+            <p>
+                Orthographic Projection is a form of parallel projection in which all the projection lines are
+                orthogonal (perpendicular) to the projection plane. This projection maintains relative dimensions.
+            </p>
+            <div class="img-flex-wrap">
+                <div class="img-grid-box">
+                    <img class="img-white-bg-card"
+                         src="https://cdn.britannica.com/73/131973-050-748BD531/drawing-projections-isometric-projection.jpg"
+                         alt="Orthographic Projection (credit to: https://www.britannica.com/technology/orthographic-projection-engineering">
+                </div>
+            </div>
+            <p>
+                This projection can be broken down into three pieces. First we want to center the viewing volume
+                around the origin by translating it half of the length in each direction. We also need to
+                multiply each distance by $-1$ to conform to the right-hand rule.
+            </p>
+            <div class="eq latex latex-30">
+                $$T =
+                \begin{bmatrix}
+                1 & 0 & 0 & -\frac{left\ +\ right}{2} \\
+                0 & 1 & 0 & -\frac{bottom\ +\ top}{2} \\
+                0 & 0 & 1 & \frac{near\ +\ far}{2} \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+            </div>
+            <p>
+                The second transformation is to scale the viewing volume and remap said volume to be bounded
+                all around by the range $[-1,\ 1]$.
+            </p>
+            <div class="eq latex latex-45">
+                $$S =
+                \begin{bmatrix}
+                \frac{2}{right\ -\ left} & 0 & 0 & 0 \\
+                0 & \frac{2}{top\ -\ bottom} & 0 & 0 \\
+                0 & 0 & \frac{2}{far\ -\ near} & 0 \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+            </div>
+            <p>
+                The third and final transformation we need to make is to switch from a right-handed to a
+                left-handed coordinate system by switching the direction of the $z-axis$ and reflecting
+                across the $xy-plane$.
+            </p>
+            <div class="eq latex latex-30">
+                $$R =
+                \begin{bmatrix}
+                1 & 0 & 0 & 0 \\
+                0 & 2 & 0 & 0 \\
+                0 & 0 & -1 & 0 \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+            </div>
+            <p>
+                The final matrix transformation is defined as the following composite of the three previous
+                matrices.
+            </p>
+            <div class="eq latex latex-100">
+                $$RST =
+                \begin{bmatrix}
+                1 & 0 & 0 & 0 \\
+                0 & 2 & 0 & 0 \\
+                0 & 0 & -1 & 0 \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}
+                \begin{bmatrix}
+                \frac{2}{right\ -\ left} & 0 & 0 & 0 \\
+                0 & \frac{2}{top\ -\ bottom} & 0 & 0 \\
+                0 & 0 & \frac{2}{far\ -\ near} & 0 \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}
+                \begin{bmatrix}
+                1 & 0 & 0 & -\frac{left\ +\ right}{2} \\
+                0 & 1 & 0 & -\frac{bottom\ +\ top}{2} \\
+                0 & 0 & 1 & \frac{near\ +\ far}{2} \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+
+                $$=
+                \begin{bmatrix}
+                \frac{2}{right\ -\ left} & 0 & 0 & -\frac{right\ +\ left}{right\ -\ left} \\
+                0 & \frac{2}{top\ -\ bottom} & 0 & -\frac{top\ +\ bottom}{top\ -\ bottom} \\
+                0 & 0 & -\frac{2}{far\ -\ near} & -\frac{far\ +\ near}{far\ -\ near} \\
+                0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+            </div>
+        </div>
+        <br>
+    </div>
+    <br>
+
+    <div class="content-group">
+        <h2>Earth, Moon, Sun Rotation</h2>
+        <p>
+            The last piece of the coding homework for this week was to model the moon orbiting the Earth,
+            which in turn was orbiting the Sun. We were given a a matrix representing the total transformation
+            being performed on the Earth, the offset from earth, and the angle of rotation. In order to
+            do this we need to rotate the moon around the $z-axis$ (since we are living in the $xy-plane$)
+            and translate the moon away from the Earth. Below is some pseudo code of how to implement it.
+        </p>
+        <div class="eq">
+            <pre>function createMoonMatrix(currentRotationAngle, offsetFromEarth, earthTransform) {</pre>
+            <pre>   Create a Matrix4 to hold the moon's transformation</pre>
+            <pre>   Create a rotation matrix around the z axis with currentRotationAngle</pre>
+            <pre>   Create a translation matrix with offsetFromEarth in the x and y directions</pre>
+            <pre>       and 0 in the z</pre>
+            <pre>   Multiply the moon matrix by earthTransform</pre>
+            <pre>   Multiply the moon matrix by the rotation matrix</pre>
+            <pre>   Multiply the moon matrix by the translation matrix and return it</pre>
+            <pre>}</pre>
+        </div>
+        <div class="img-flex-wrap">
+            <div class="img-grid-box dual-grid-box-img">
+                <p>
+                    WEEEEEEEEEE!<br>
+                    This was multiplied in reverse order.
+                </p>
+                <img class="img-white-bg-card sq"
+                     src="../../assets/img/moon_1.gif"
+                     alt="Moon Orbit Reverse">
+            </div>
+            <div class="img-grid-box dual-grid-box-img">
+                <p>That looks more like what we wanted!</p>
+                <img class="img-white-bg-card sq"
+                     src="../../assets/img/moon_2_c.gif"
+                     alt="Moon Orbit">
+            </div>
+        </div>
+    </div>
+
+    <h3>Image Sources</h3>
+    <ol>
+        <li>
+            <a href="https://en.wikipedia.org/wiki/Affine_transformation">
+                Affine Transformations 1</a>
+        </li>
+        <li>
+            <a href="https://people.gnome.org/~mathieu/libart/libart-affine-transformation-matrices.html">
+                Affine Transformations 2</a>
+        </li>
+        <li>
+            <a href="https://www.geeksforgeeks.org/2d-transformation-in-computer-graphics-set-1-scaling-of-objects/">
+                Scaling</a>
+        </li>
+        <li>
+            <a href="https://mathbitsnotebook.com/Geometry/Transformations/TRTransformationRotations.html">
+                Rotation</a>
+        </li>
+        <li>
+            <a href="https://mathworld.wolfram.com/EulerAngles.html">
+                Euler Angles</a>
+        </li>
+        <li>
+            <a href="https://www.researchgate.net/figure/llustrates-the-principle-of-gimbal-lock-The-outer-blue-frame-represents-the-x-axis-the_fig4_338835648">
+                Gimbal Lock</a>
+        </li>
+        <li>
+            <a href="https://www.onlinemathlearning.com/geometry-grade5.html">
+                Translation</a>
+        </li>
+        <li>
+            <a href="https://webglfundamentals.org/webgl/lessons/webgl-3d-perspective.html">
+                Perspective Projection</a>
+        </li>
+        <li>
+            <a href="https://www.geeksforgeeks.org/perspective-projection-and-its-types/">
+                Perspective Projection Reference Frame</a>
+        </li>
+        <li>
+            <a href="https://www.britannica.com/technology/orthographic-projection-engineering">
+                Orthographic Projection</a>
+        </li>
+    </ol>
+</div>
+</body>
