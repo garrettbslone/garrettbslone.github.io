@@ -16,6 +16,10 @@
   margin: 10px auto;
 }
 
+.content-group {
+  margin: 0 auto;
+}
+
 .img-white-bg-card {
   border-radius: 10px;
   background-color: white;
@@ -53,6 +57,27 @@
   border: 1px solid #b5e853;
   border-radius: 5px;
   padding: 4px 6px;
+}
+
+.latex {
+  height: auto;
+  margin: 0 auto;
+}
+
+.latex-30 {
+  width: 30%;
+}
+
+latex-45 {
+  width: 45%;
+}
+
+.latex-55 {
+  width: 55%;
+}
+
+.latex-100 {
+  width: 100%;
 }
 
 li {
