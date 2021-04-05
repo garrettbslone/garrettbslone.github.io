@@ -55,8 +55,8 @@
   transition: width 1s, height 1s;
 }
 
-.rec-300-250 {
-  width: 300px;
+.rec-350-250 {
+  width: 350px;
   height: 250px;
 }
 
@@ -111,13 +111,28 @@
   width: 100%;
 }
 
+header {
+  margin: 0;
+}
+
 li {
   margin: 10px 0;
 }
 
+body {
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
 pre {
-  background-color: #37393d;
-  border: none;
+  border: 1px solid;
+  border-radius: 5px;
   padding: 0;
-  margin: 0 auto;
+}
+
+code {
+  tab-size: 4;
 }
