@@ -11,16 +11,11 @@ description: RayTracing.
         <p>
             To begin we were given some code that set up the canvas (256 x 256) and rendered a gray square on the
             page. From there it was time to start setting up our visual spaces. Starting by converting our given
-            field of view (fov) into radians from degrees by multiplying it by<br>
-            <span class="eq">&pi; / 180</span>.
+            field of view (fov) into radians from degrees by multiplying it by $\frac{\pi}{180}$
             Next, it was time to setup some scale in the plane that the eye is looking through by setting
             a pixel width and half width to help find the center of each pixel to shoot the ray through.
             Since the vertical plane we are looking through is 2 units across in real space the size of each pixel
-            is now:
-            <span class="eq">
-                (width in real space) / (number of pixels) => (2 / 256)
-            </span>.
-            Next, we need to
+            is now:  $\frac{width\ in\ real space}{number\ of\ pixels} => \frac{2}{256}$. Next, we need to
             determine the distance our eye is from the plane where we're shooting our rays through. We can do this
             can making a right triangle using half of our fov and the plane we're looking through as shown below.
             We can use the distance from on end of the plane to the center (1) and the tangent of half of our fov
@@ -42,8 +37,8 @@ description: RayTracing.
     <div class="content-group">
         <h2>Adding some objects</h2>
         <p>
-            Now it's time to start adding some objects to our scene. We'll add a sphere centered at (0, 0, 0)
-            with a radius of 0.25 an a plane beneath the sphere. The sphere should be in the center of the scene
+            Now it's time to start adding some objects to our scene. We'll add a sphere centered at $(0,\ 0,\ 0)$
+            with a radius of $0.25$ an a plane beneath the sphere. The sphere should be in the center of the scene
             sitting above the plane. We haven't actually changed any of the rendering code, so for now the scene
             hasn't changed visually at all.
         </p>
@@ -55,13 +50,13 @@ description: RayTracing.
         <p>
             Up until this point we have been rendering the same shade fo gray for every pixel onn the screen.
             Now it's time to start spawning rays (from the eye point) and shooting them through the center of
-            each pixel. To do this we can take and arbitrary pixel (x, y) and find the offset from the center by using
+            each pixel. To do this we can take and arbitrary pixel $(x,\ y)$ and find the offset from the center by using
             the size of our visual plane and size of each pixel. We then need to find the direction vector for this ray
             which is going from the eye point to that new pixel coordinate, and we have a handy fromto function in our
             Vector3 class. Lastly, we need to take this direction vector and create a ray with it's origin at
             the eye point going in the direction we just found and return it. To help debug and see if we generated the
-            the correct ray, we can set each pixel's color to a value between 0 and 1 based on it's max x value; The
-            result is a nice gradient from white on the edges to black in the middle.
+            the correct ray, we can set each pixel's color to a value between $0$ and $1$ based on it's max $x$ value;
+            The result is a nice gradient from white on the edges to black in the middle.
         </p>
         <div class="img-flex-wrap">
             <div class="img-grid-box">
@@ -110,17 +105,15 @@ description: RayTracing.
             of impact and the ray to the light from that point, and that intensity is independent of the viewing
             direction. Some basic pseudocode looks like:
         </p>
-        <div class="eq">
-            function calc_light (intersection, light_pt) {<br>
-            <pre>   Find a vector from the intersection point to the light_pt and normalize</pre>
-            <pre>   Calculate the dot product of the light vector and the surface normal</pre>
-            <pre>   Return calculated light (between 0 and 1)</pre>
-            }
-        </div>
+        <pre><code class="js">function calc_light (intersection, light_pt) {
+    Find a vector from the intersection point to the light_pt and normalize
+    Calculate the dot product of the light vector and the surface normal
+    Return calculated light (between 0 and 1)
+}</code></pre>
         <p>
             Once we have the light setup we can now rotate the light in a circle around the center by using the
-            cos (for x) and sin (for z) of the time elapsed to simulate the light moving around the sphere in the
-            center.
+            $cos$ (for $x$) and $sin$ (for $z$) of the time elapsed to simulate the light moving around the sphere
+            in the center.
         </p>
         <div class="img-grid-box">
             <p>Lambert's Law</p>
@@ -166,25 +159,27 @@ description: RayTracing.
             object using their builtin raycast functions. Note since we are launching a ray from a point on the
             surface of an object, it can intersect with itself again and act as if it's in shadow while not
             actually being in shadow resulting in lots of black dots all over. In order to get around this,
-            we can apply a small offset from the origin towards the light. We can update our calc_light function
-            from earlier to now take the possibility of shadows into account.
+            we can apply a small offset from the origin towards the light. We can update our
+            <span class="eq">calc_light()</span> function from earlier to now take the possibility of shadows
+            into account.
         </p>
-        <div class="eq">
-            function calc_light (intersection, light_pt) {<br>
-            <pre>   Find a vector from the intersection point to the light_pt and normalize</pre>
-            <pre>   Create a shadow ray with origin at the intersection point towards the light</pre>
-            <pre>   Add a small offset to the origin towards the light point</pre>
-            <pre>   for (each object in the scene) {</pre>
-            <pre>       Raycast the shadow ray</pre>
-            <pre>   }</pre>
-            <pre>   if (shadow ray hit an object) {</pre>
-            <pre>       Set the color to black</pre>
-            <pre>   } else {</pre>
-            <pre>       Calculate the dot product of the light vector and the surface normal</pre>
-            <pre>   }</pre>
-            <pre>   Return calculated light (between 0 and 1)</pre>
-            }
-        </div>
+        <pre><code class="js">function calc_light (intersection, light_pt) {
+    Find a vector from the intersection point to the light_pt and normalize
+    Calculate the dot product of the light vector and the surface normal
+    Add a small offset to the origin towards the light point
+
+    for (each object in the scene) {
+        Raycast the shadow ray
+    }
+
+    if (shadow ray hit an object) {
+        Set the color to black
+    } else {
+        Calculate the dot product of the light vector and the surface normal
+    }
+
+    Return calculated light (between 0 and 1)
+}</code></pre>
         <div class="img-flex-wrap">
             <div class="img-grid-box dual-grid-box-img">
                 <p>Why are there 2 shadows?</p>
@@ -248,14 +243,12 @@ description: RayTracing.
             color of the object we hit by the intensity of the light. Lastly, we need to change the setPixelColor
             function to use a Vector3 and we should have some color.
         </p>
-        <div class="eq">
-            function setPixelColor (xPixelIndex, yPixelIndex, color) {<br>
-            <pre>   Set the red channel to color.x * 255</pre>
-            <pre>   Set the green channel to color.y * 255</pre>
-            <pre>   Set the blue channel to color.z * 255</pre>
-            <pre>   Set the alpha channel to 255 // meaning full visibility (unaffected by the color)</pre>
-            }
-        </div>
+        <pre><code class="js">function setPixelColor (xPixelIndex, yPixelIndex, color) {
+    Set the red channel to color.x * 255
+    Set the green channel to color.y * 255
+    Set the blue channel to color.z * 255
+    Set the alpha channel to 255 // meaning full visibility (unaffected by the color)
+}</code></pre>
         <div class="img-flex-wrap">
             <div class="img-grid-box">
                 <p>&#x1F308;</p>
@@ -314,14 +307,9 @@ description: RayTracing.
             reflection ray's direction vector can be found by using the angle of incidence of the original
             ray and the surface normal. That is, the angle of reflection is equal to the angle of incidence and can be
             found by subtracting the initial vector from the surface normal times twice the dot product of the surface
-            normal and the initial vector.
-            <span class="eq">
-            <b><i>R</i></b> = 2 *<b><i>n</i></b> (<b><i>n</i></b> * <b><i>l</i></b>) - <b><i>l</i></b>
-        </span>
-            There is also one new attribute for our Sphere and Plane classes, reflectivity (a scalar value between 0 and
-            1).
-            This reflectivity will be multiplied by the color at each point of intersection. The easiest way to do this
-            is
+            normal and the initial vector. $\vec{R} = 3 \cdot \vec{n} (\vec{n} \cdot \vec{l}) - \vec{l}$ There is also
+            one new attribute for our Sphere and Plane classes, reflectivity (a scalar value between 0 and 1). This
+            reflectivity will be multiplied by the color at each point of intersection. The easiest way to do this is
             b using a recursive structure, but we wat to avoid getting to bogged down by recursing a lot, so we'll go
             ahead and set a max recursion depth of 2. Basically this allows us to trace 3 reflections deep. For now,
             we'll also only make the sphere in the center fully reflective (reflectivity = 1) and leave the
@@ -336,24 +324,22 @@ description: RayTracing.
                      alt="Light Reflection Diagram (credit to: http://www.thestargarden.co.uk/Reflection-refraction-and-diffraction.html">
             </div>
         </div>
-        <div class="eq">
-            function trace (ray, depth) {<br>
-            <pre>   Find the closest object intersection</pre>
-            <pre>   if (we hit something) {</pre>
-            <pre>       Calculate the color at that point</pre>
-            <pre>       if (depth < 2) {</pre>
-            <pre>           Calculate the reflection ray, increment depth, recurse</pre>
-            <pre>           Multiply the reflection color by the hit object's reflectivity</pre>
-            <pre>           Calculate the reflection ray, increment depth, recurse</pre>
-            <pre>           Add the reflection color to the previous color and return it</pre>
-            <pre>        } else {</pre>
-            <pre>           Return the calculated color</pre>
-            <pre>        }</pre>
-            <pre>   else {</pre>
-            <pre>       Return the background color (black in this case)</pre>
-            <pre>   }</pre>
-            }
-        </div>
+        <pre><code class="js">function trace (ray, depth) {
+    Find the closest object intersection
+
+    if (we hit something) {
+        Calculate the color at that point
+
+        if (depth < 2) {
+            Calculate the reflection ray, increment depth, recurse
+            Multiply the reflection color by the hit objects reflectivity
+        } else {
+            Return the calculated color
+        }
+    else {
+        Return the background color (black in this case)
+    }
+}</code></pre>
         <div class="img-flex-wrap">
             <div class="img-grid-box dual-grid-box-img">
                 <p>Why are there so many extra dots?</p>

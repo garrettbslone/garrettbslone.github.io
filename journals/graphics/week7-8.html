@@ -202,13 +202,11 @@ description: "Rasterization Pipeline"
             element <span class="eq">&lt;canvas></span> using a webgl context which looks something like the following,
             and it is where our coding journey begins.
         </p>
-        <div class="eq">
-            <pre>// get a reference to the canavs element from the DOM</pre>
-            <pre>let canvas = document.getElementById("my-canvas");</pre>
-            <br>
-            <pre>// set the context to webgl</pre>
-            <pre>let gl = canvas.getContext("webgl");</pre>
-        </div>
+        <pre><code class="js">// get a reference to the canavs element from the DOM
+let canvas = document.getElementById("my-canvas");
+
+// set the context to webgl
+let gl = canvas.getContext("webgl");</code></pre>
         <p>
             Once we have that reference, we can start to render the scene. For this assignment the starter code I
             got went a long way, and setup both the vertex and fragment shaders, compiled and attached them to
@@ -233,21 +231,19 @@ description: "Rasterization Pipeline"
             without having to pass around both references. Note this function is also where the bacground color
             is being set to that blue-ish color via the <span class="eq">gl.clear</span>.
         </p>
-        <div class="eq">
-            <pre>// set the viewport to be te entire size of the canvas</pre>
-            <pre>gl.viewport(0,                 // x coord of lower left corner</pre>
-            <pre>            0,                 // y coord of lower left corner</pre>
-            <pre>            gl.canvasWidth,    // width</pre>
-            <pre>            gl.canvasHeight);  // height</pre>
-            <br>
-            <pre>// set the background color</pre>
-            <pre>// set the gl color buffer attribute to the predefined color</pre>
-            <pre>// each value between 0 and 1</pre>
-            <pre>gl.clearColor(red, blue, green, alpha)</pre>
-            <br>
-            <pre>// actually reset the color buffer (and depth buffer)</pre>
-            <pre>gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);</pre>
-        </div>
+        <pre><code class="js">// set the viewport to be te entire size of the canvas
+gl.viewport(0,                 // x coord of lower left corner
+            0,                 // y coord of lower left corner
+            gl.canvasWidth,    // width
+            gl.canvasHeight);  // height
+
+// set the background color
+// set the gl color buffer attribute to the predefined color
+// each value between 0 and 1
+gl.clearColor(red, blue, green, alpha);
+
+// actually reset the color buffer (and depth buffer)
+gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);</code></pre>
         <br>
 
         <h2>Attaching the Shaders</h2>
@@ -258,29 +254,27 @@ description: "Rasterization Pipeline"
             it to the WebGL context for the GPU to have access to them. Doing this still hasn't changed the scene
             at all since we are not drawing any geometry, so we still have that blue-ish square taking up the canvas.
         </p>
-        <div class="eq">
-            <pre>// get and compile the vertex shader</pre>
-            <pre>let vertexShaderText = document.getElementById("my-vertex-shader").textContent;</pre>
-            <pre>let vertexShader = gl.createShader(gl.VERTEX_SHADER);</pre>
-            <pre>gl.shaderSource(vertexShader, vertexShaderText);</pre>
-            <pre>gl.compileShader(vertexShader);</pre>
-            <br>
-            <pre>// get and compile the fragment shader</pre>
-            <pre>let fragmentShaderText = document.getElementById("my-fragment-shader").textContent;</pre>
-            <pre>let fragmentShader = gl.createShader(gl.Fragment_SHADER);</pre>
-            <pre>gl.shaderSource(fragmentShader, fragmentShaderText);</pre>
-            <pre>gl.compileShader(fragmentShader);</pre>
-            <br>
-            <pre>// create a gl "program" to hold our compiled shaders</pre>
-            <pre>let shaderProgram = gl.createProgram();</pre>
-            <br>
-            <pre>// attach the shaders</pre>
-            <pre>gl.attachShader(shaderProgram, vertexShader);</pre>
-            <pre>gl.attachShader(shaderProgram, fragmentShader);</pre>
-            <br>
-            <pre>// link the shader program so gl (and the GPU) can use it</pre>
-            <pre>gl.linkProgram(shaderProgram);</pre>
-        </div>
+        <pre><code class="js">// get and compile the vertex shader
+let vertexShaderText = document.getElementById("my-vertex-shader").textContent;
+let vertexShader = gl.createShader(gl.VERTEX_SHADER);
+gl.shaderSource(vertexShader, vertexShaderText);
+gl.compileShader(vertexShader);
+
+// get and compile the fragment shader
+let fragmentShaderText = document.getElementById("my-vertex-shader").textContent;
+let fragmentShader = gl.createShader(gl.VERTEX_SHADER);
+gl.shaderSource(fragmentShader, fragmentShaderText);
+gl.compileShader(fragmentShader);
+
+// create a gl "program" to hold our compiled shaders
+let shaderProgram = gl.createProgram();
+
+// attach the shaders
+gl.attachShader(shaderProgram, vertexShader);
+gl.attachShader(shaderProgram, vertexShader);
+
+// link the shader program so gl (and the GPU) can use it
+gl.linkProgram(shaderProgram);</code></pre>
         <br>
 
         <h2>Adding a Triangle</h2>
@@ -291,36 +285,34 @@ description: "Rasterization Pipeline"
             important to keep in mind that due to the right-hand rule $+z$ is coming out of the screen, so
             our displacement here should be in the $-z$ direction.
         </p>
-        <div class="eq">
-            <pre>// move the triangle 7 units infront of the camera</pre>
-            <pre>triangleGeometry.worldMatrix.makeIdentity().makeTranslation(0, 0, -7);</pre>
-            <br>
-            <pre>// project the triangle</pre>
-            <pre>// not that the projection matrix is global and not specific to the triangle</pre>
-            <pre>projectionMatrix.makePerspective(45,                               // vertical fov</pre>
-            <pre>                                 gl.canvasWidth / gl.canvasHeight, // aspect ratio</pre>
-            <pre>                                 0.1,                              // near plane distance</pre>
-            <pre>                                 1000);                            // far plane distance</pre>
-            <br>
-            <pre>// send the matricies to the shader using the transpose of the elements</pre>
-            <pre>// since the GPUs like to have the elements ordered as column vectors for</pre>
-            <pre>// a performance reasons</pre>
-            <pre>gl.uniformMatrix4fv(shaderProgram.worldMatrixUniform,</pre>
-            <pre>                    false,</pre>
-            <pre>                    triangleGeometry.worldMatrix.clone().transpose().elements)</pre>
-            <br>
-            <pre>// repeat the above with the viewMatrix and projection matrix</pre>
-        </div>
+        <pre><code class="js">// move the triangle 7 units infront of the camera
+triangleGeometry.worldMatrix.makeIdentity().makeTranslation(0, 0, -7);
+
+// project the triangle
+// not that the projection matrix is global and not specific to the triangle
+projectionMatrix.makePerspective(45,                               // vertical fov
+                                 gl.canvasWidth / gl.canvasHeight, // aspect ratio
+                                 0.1,                              // near plane distance
+                                 1000);                            // far plane distance
+
+// send the matricies to the shader using the transpose of the elements
+// since the GPUs like to have the elements ordered as column vectors for
+// performance reasons
+gl.uniformMatrix4fv(shaderProgram.worldMatrixUniform,
+                    false,
+                    triangleGeometry.worldMatrix.clone().transpose().elements);
+
+// repeat the above with the viewMatrix and projection matrix</code></pre>
         <div class="img-flex-wrap">
             <div class="img-grid-box dual-grid-box-img">
                 <p>Big Triangle</p>
-                <img class="img-white-bg-card rec-300-250"
+                <img class="img-white-bg-card rec-350-250"
                      src="../../assets/img/wgli_btr_1.png"
                      alt="Black Triangle">
             </div>
             <div class="img-grid-box dual-grid-box-img">
                 <p>That looks more like 7</p>
-                <img class="img-white-bg-card rec-300-250"
+                <img class="img-white-bg-card rec-350-250"
                      src="../../assets/img/wgli_sm_btr_1.png"
                      alt="Black Triangle">
             </div>
@@ -336,28 +328,26 @@ description: "Rasterization Pipeline"
             correspond to each vertex in the triangle. Each triplet is compsed of 3 floats from 0 to 1 that represent
             a value for the Red, Green, and Blue channels respectively.
         </p>
-        <div class="eq">
-            <pre>// 1. create color buffer</pre>
-            <pre>// allocating space in VRAM</pre>
-            <pre>let newColorBuffer = gl.createBuffer();</pre>
-            <br>
-            <pre>// 2. bind color buffer</pre>
-            <pre>gl.bindBuffer(gl.ARRAY_BUFFER, newColorBuffer);</pre>
-            <br>
-            <pre>// 3. create color array</pre>
-            <pre>let colors = [</pre>
-            <pre>   1.0, 0.0, 0.0,  // red</pre>
-            <pre>   0.0, 1.0, 0.0,  // green</pre>
-            <pre>   0.0, 0.0, 1.0   // blue</pre>
-            <pre>];</pre>
-            <br>
-            <pre>// 4. "buffer" color data</pre>
-            <pre>// copy the buffer from RAM to VRAM</pre>
-            <pre>gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);</pre>
-            <br>
-            <pre>// 5. store a reference to the color buffer on the triangleGeometry object</pre>
-            <pre>triangleGeometry.colorBuffer = newColorBuffer;</pre>
-        </div>
+        <pre><code class="js">// 1. create color buffer
+// allocating space in VRAM
+let newColorBuffer = gl.createBuffer();
+
+// 2. bind color buffer
+gl.bindBuffer(gl.ARRAY_BUFFER, newColorBuffer);
+
+// 3. create color array
+let colors = [
+    1.0, 0.0, 0.0,  // red
+    0.0, 1.0, 0.0,  // green
+    0.0, 1.0, 0.0,  // green
+];
+
+// 4. "buffer" color data
+// copy the buffer from RAM to VRAM
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+
+// 5. store a reference to the color buffer on the triangleGeometry object
+triangleGeometry.colorBuffer = newColorBuffer;</code></pre>
         <p>
             Next we need to add a new attribute to the vertex shader to handle the color as well as a new varying
             to both the vertex and fragment shaders. What do attribute and varying mean? Well, an attribute is
@@ -367,38 +357,34 @@ description: "Rasterization Pipeline"
             already has the varying color, we just need to take care of the vertex shader for now.
         </p>
         <span style="text-align: center;">Vertex Shader</span>
-        <div class="eq">
-            <pre>attribute vec3 aVertexColor;</pre>
-            <pre>...</pre>
-            <br>
-            <pre>varying vec3 vColor;</pre>
-            <br>
-            <pre>void main(void) {</pre>
-            <pre>   ...</pre>
-            <pre>   vColor = aVertexColor;</pre>
-            <pre>}</pre>
-        </div>
+        <pre><code class="c">attribute vec3 aVertexColor;
+...
+
+varying vec3 vColor;
+
+void main(void) {
+    ...
+
+    vColor = aVertexColor;
+}</code></pre>
         <p>
             Next we need to get a reference to the color shader attribute, and then bind the color buffer to
             the attribute. We can get the attribute and attach the reference to the shaderProgram and then
             enable it for use.
         </p>
-        <div class="eq">
-            <pre>// Get a reference to the color attribute variable in the vertex shader and enable it</pre>
-            <pre>shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");</pre>
-            <pre>gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);</pre>
-            <br>
-            <pre>// bind te color buffer for use in the shader program</pre>
-            <pre>gl.bindBuffer(gl.ARRAY_BUFFER, triangleGeometry.colorBuffer);</pre>
-            <pre>gl.vertexAttribPointer(</pre>
-            <pre>   triangleGeometry.shaderProgram.vertexColorAttribute,</pre>
-            <pre>   3,          // number of verticies</pre>
-            <pre>   gl.FLOAT,   // type</pre>
-            <pre>   gl.FALSE,   // normalized?</pre>
-            <pre>   0,          // stride (no idea what this does)</pre>
-            <pre>   0,          // offset from first compoenent in the attribute array</pre>
-            <pre>);</pre>
-        </div>
+        <pre><code class="js">// Get a reference to the color attribute variable in the vertex shader and enable it
+shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
+gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
+
+// bind the color buffer for use in the shader program
+gl.bindBuffer(gl.ARRAY_BUFFER, triangleGeometry.colorBuffer);
+    triangleGeometry.shaderProgram.vertexColorAttribute,
+    3,          // number of verticies
+    gl.FLOAT,   // type
+    gl.FALSE,   // normalized?
+    0,          // stride (no idea what this does)
+    0,          // offset from first compoenent in the attribute array
+);</code></pre>
         <div class="img-flex-wrap">
             <div class="img-grid-box">
                 <p>A nice Colored Triangle</p>
@@ -417,38 +403,36 @@ description: "Rasterization Pipeline"
             seems to be undefined) then convert it to seconds from miliseconds and we can use that to find the
             degrees to rotate.
         </p>
-        <div class="eq">
-            <pre>function updateAndRender(s) {</pre>
-            <pre>   time.secondsElapsedSinceStart = !isNaN(s) ? s / 1000 : 0;</pre>
-            <br>
-            <pre>   ...</pre>
-            <br>
-            <pre>   // calculate the number of degrees we should have rotated given how much time has elapsed</pre>
-            <pre>   // 60 degrees per second</pre>
-            <pre>   var degrees = time.secondsElapsedSinceStart * 60;</pre>
-            <br>
-            <pre>   ...</pre>
-            <br>
-            <pre>   // setup the rotation</pre>
-            <pre>   let triangleRot = new Matrix4().makeRotationY(degrees);</pre>
-            <br>
-            <pre>   ...</pre>
-            <br><br>
-            <pre>   // combine the rotation with the translation</pre>
-            <pre>   let triangleTransl = new Matrix4().makeTranslation(0, 0, -7);</pre>
-            <pre>   triangleGeometry.worldMatrix = triangleTransl.multiply(triangleRot);</pre>
-            <pre>}</pre>
-        </div>
+        <pre><code class="js">function updateAndRender(s) {
+    time.secondsElapsedSinceStart = !isNaN(s) ? s / 1000 : 0;
+
+    ...
+
+    // calculate the number of degrees we should have rotated given how much time has elapsed
+    // 60 degrees per second
+    var degrees = time.secondsElapsedSinceStart * 60;
+
+    ...
+
+    // setup the rotation
+    let triangleRot = new Matrix4().makeRotationY(degrees);
+
+    ...
+
+    // combine the rotation with the translation
+    let triangleTransl = new Matrix4().makeTranslation(0, 0, -7);
+    triangleGeometry.worldMatrix = triangleTransl.multiply(triangleRot);
+}</code></pre>
         <div class="img-flex-wrap">
             <div class="img-grid-box">
                 <p class="dual-grid-box-img dual-grid-box-img">??? Turns out my projection matrix wasn't quite right</p>
-                <img class="img-white-bg-card rec-300-250"
+                <img class="img-white-bg-card rec-350-250"
                      src="../../assets/img/wgli_ctr_rot_1.gif">
             </div>
             <div class="img-grid-box">
                 <p class="dual-grid-box-img dual-grid-box-img">Waaaay too fast. Forgot to covert the time from
                     miliseconds to seconds</p>
-                <img class="img-white-bg-card rec-300-250"
+                <img class="img-white-bg-card rec-350-250"
                      src="../../assets/img/wgli_ctr_rot_2.gif">
             </div>
         </div>
@@ -473,25 +457,23 @@ description: "Rasterization Pipeline"
             to $-1$ since that is how far down the unit cube goes, and it will make sure that the tirangle is above the
             lines.
         </p>
-        <div class="eq">
-            <pre>var linePositions = [];</pre>
-            <br>
-            <pre>// specify the horizontal lines</pre>
-            <pre>for (var i = -10; i <= 10; ++i) {</pre>
-            <pre>   // add position for line start point (x value should be i)</pre>
-            <pre>   linePositions.push(i, -1, 10);</pre>
-            <pre>   // add position for line end point (x value should be i)</pre>
-            <pre>   linePositions.push(i, -1, -10);</pre>
-            <pre>}</pre>
-            <br>
-            <pre>// specify the lateral lines</pre>
-            <pre>  for (var i = -10; i <= 10; ++i) {</pre>
-            <pre>   // add position for line start point (z value should be i)</pre>
-            <pre>   linePositions.push(-10, -1, i);</pre>
-            <pre>   // add position for line end point (z value should be i)</pre>
-            <pre>   linePositions.push(10, -1, i);</pre>
-            <pre>}</pre>
-        </div>
+        <pre><code class="js">var linePositions = [];
+
+// specify the horizontal lines
+for (var i = -10; i <= 10; ++i) {
+    // add position for line start point (x value should be i
+    linePositions.push(i, -1, 10);
+    // add position for line end point (x value should be i)
+    linePositions.push(i, -1, -10);
+}
+
+// specify the lateral lines
+for (var i = -10; i <= 10; ++i) {
+    // add position for line start point (z value should be i)
+    linePositions.push(-10, -1, i);
+    // add position for line end point (z value should be i)
+    linePositions.push(10, -1, i);
+}</code></pre>
         <p>
             After creating the verticies in $linePositions$ array which is bound an then enabled to the gl context,
             we need to project the line grid into our scene the same way we did the triangle, and we end up
@@ -514,31 +496,34 @@ description: "Rasterization Pipeline"
             P.S.: Sorry they're listed one at a time I couldn't get the styling to display the vectors properly
             when I had 2 to a row.
         </p>
-        <div class="eq">
-            <pre>// setting floating point precision</pre>
-            <pre>precision mediump float;</pre>
-            <br>
-            <pre>// time elasped since program start (t/60) </pre>
-            <pre>uniform float uTime;</pre>
-            <br>
-            <pre>// vertex color and positions</pre>
-            <pre>varying vec3 vColor;</pre>
-            <pre>varying vec3 vPosition;</pre>
-            <br>
-            <pre>void main(void) {</pre>
-            <pre>   float _rads = radians(uTime);</pre>
-            <pre>   float _dot = dot(vColor, vPosition);</pre>
-            <br>
-            <pre>   // Not sure these really have any meaning</pre>
-            <pre>   // but I was having fun :)</pre>
-            <pre>   vec3 _cross_cp = cross(vColor, vPosition);</pre>
-            <pre>   vec3 _cross_pc = cross(vPosition, vColor);</pre>
-            <br>
-            <pre>   // we send a value of 1.0 as the 4th element to the alpha channel</pre>
-            <pre>   // meaning fully opaque</pre>
-            <pre>   gl_FragColor = vec4(vec3-above-each-img, 1.0)</pre>
-            <pre>}</pre>
-        </div>
+        <pre><code class="c">// setting floating point precision
+precision mediump float;
+
+// time elasped since program start (t/60)
+uniform float uTime;
+
+// vertex color and positions
+varying vec3 vColor;
+varying vec3 vPosition;
+
+// vertex color and positions
+varying vec3 vColor;
+varying vec3 vPosition;
+
+void main(void) {
+    float _rads = radians(uTime);
+    float _dot = dot(vColor, vPosition);
+
+    // Not sure these really have any meaning
+    // but I was having fun :)
+    vec3 _cross_cp = cross(vColor, vPosition);
+    vec3 _cross_pc = cross(vPosition, vColor);
+
+    // we send a value of 1.0 as the 4th element to the alpha channel
+    // meaning fully opaque
+    gl_FragColor = vec4(vec3-above-each-img, 1.0)
+}</code></pre>
+        
         <div class="img-flex-wrap">
             <div class="img-grid-box">
                 <p>
@@ -976,53 +961,52 @@ description: "Rasterization Pipeline"
 
         <h2>Making a movable Camera</h2>
         <p>
-            For this last piece here, the goal is to be able to move the camera around and keep the scene in tact. I started
+            For this last piece here, the goal is to be able to move the camera around and keep the scene in tact. I
+            started
             by defining a world matrix and well as a movement speed step for the camera. Then I setup a keydown
             listener and added the step to matrix based on which key was pressed. Lastly, I multiplied the view matrix
             by the camera's world matrix to transform the view to be aligned with the camera.
         </p>
-        <div class="eq">
-            <pre>// first setup some global variables</pre>
-            <pre>const CAMERA_MOVEMENT_SPEED_STEP = 0.1;</pre>
-            <pre>let camera = {</pre>
-            <pre>   worldMatrix: null,</pre>
-            <pre>   e: null, </pre>
-            <pre>}</pre>
-            <br>
-            <pre>...</pre>
-            <br>
-            <pre>// then in the init function setup the matrix and a</pre>
-            <pre>// shorthand reference to the elements</pre>
-            <pre>camera.worldMatrix = new Matrix4();</pre>
-            <pre>camera.e = camera.worldMatrix.elements;</pre>
-            <br>
-            <pre>...</pre>
-            <br>
-            <pre>window.addEventListener("keydown", (event) => {</pre>
-            <pre>   if (event.key === "w" || event.key === "ArrowUp") {</pre>
-            <pre>       camera.worldMatrix.makeTranslation(camera.e[3],</pre>
-            <pre>                                           camera.e[7],</pre>
-            <pre>                                           camera.e[11] + CAMERA_MOVEMENT_SPEED_STEP);</pre>
-            <pre>   } else if (event.key === "a" || event.key === "ArrowLeft") {</pre>
-            <pre>       camera.worldMatrix.makeTranslation(camera.e[3] + CAMERA_MOVEMENT_SPEED_STEP,</pre>
-            <pre>                                           camera.e[7],</pre>
-            <pre>                                           camera.e[11]);</pre>
-            <pre>   } else if (event.key === "s" || event.key === "ArrowDown") {</pre>
-            <pre>       camera.worldMatrix.makeTranslation(camera.e[3],</pre>
-            <pre>                                           camera.e[7],</pre>
-            <pre>                                           camera.e[11] - CAMERA_MOVEMENT_SPEED_STEP);</pre>
-            <pre>   } else if (event.key === "d" || event.key === "ArrowRight") {</pre>
-            <pre>       camera.worldMatrix.makeTranslation(camera.e[3] - CAMERA_MOVEMENT_SPEED_STEP,</pre>
-            <pre>                                           camera.e[7], </pre>
-            <pre>                                           camera.e[11]);</pre>
-            <pre>   }</pre>
-            <pre>});</pre>
-            <br>
-            <pre>...</pre>
-            <br>
-            <pre>// move the view along with the camera</pre>
-            <pre>viewMatrix.multiply(camera.worldMatrix);</pre>
-        </div>
+        <pre><code class="js">// first setup some global variables
+const CAMERA_MOVEMENT_SPEED_STEP = 0.1;
+let camera = {
+    worldMatrix: null,
+    e: null,
+}
+
+...
+
+// then in the init function setup the matrix and a
+// shorthand reference to the elements
+camera.worldMatrix = new Matrix4();
+camera.e = camera.worldMatrix.elements;
+
+...
+
+window.addEventListener("keydown", (event) => {
+    if (event.key === "w" || event.key === "ArrowUp") {
+        camera.worldMatrix.makeTranslation(camera.e[3],
+                                           camera.e[7],
+                                           camera.e[11] + CAMERA_MOVEMENT_SPEED_STEP);
+    } else if (event.key === "a" || event.key === "ArrowLeft") {
+        camera.worldMatrix.makeTranslation(camera.e[3] + CAMERA_MOVEMENT_SPEED_STEP,
+                                           camera.e[7],
+                                           camera.e[11]);
+    } else if (event.key === "s" || event.key === "ArrowDown") {
+        camera.worldMatrix.makeTranslation(camera.e[3],
+                                           camera.e[7],
+                                           camera.e[11] - CAMERA_MOVEMENT_SPEED_STEP);
+    } else if (event.key === "d" || event.key === "ArrowRight") {
+        camera.worldMatrix.makeTranslation(camera.e[3] - CAMERA_MOVEMENT_SPEED_STEP,
+                                           camera.e[7],
+                                           camera.e[11]);
+    }
+});
+
+...
+
+// move the view along with the camera
+viewMatrix.multiply(camera.worldMatrix);</code></pre>
         <div class="img-flex-wrap">
             <div class="img-grid-box dual-grid-box-img">
                 <p>
@@ -1031,7 +1015,7 @@ description: "Rasterization Pipeline"
                     world matricies by the inverse of the
                     camera world matrix
                 </p>
-                <img class="img-white-bg-card rec-300-250"
+                <img class="img-white-bg-card rec-350-250"
                      src="../../assets/img/wgli_cm_1.gif"
                      alt="Movable Camera">
             </div>
@@ -1041,7 +1025,7 @@ description: "Rasterization Pipeline"
                     Caused by multiplying the triangle world matrix
                     by the camera world matrix
                 </p>
-                <img class="img-white-bg-card rec-300-250"
+                <img class="img-white-bg-card rec-350-250"
                      src="../../assets/img/wgli_cm_2.gif"
                      alt="Movable Camera">
             </div>
@@ -1058,7 +1042,7 @@ description: "Rasterization Pipeline"
         </div>
     </div>
     <br>
-    
+
     <div id="webgl-guide" style="display: none;">
         1. get canvas id for webgl ctx (blue sq)
         2. set the viewport dimensons (blue sq)

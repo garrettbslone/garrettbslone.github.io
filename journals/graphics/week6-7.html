@@ -242,14 +242,12 @@ description: "Mathematical Foundations 2: Matrices."
             Some pseudo code for this looks something like: (assuming that we are using a singular array to represent
             our $4\times 4$ matrix).
         </p>
-        <div class="eq">
-            <pre>// This function is part of the Matrix4 class</pre>
-            <pre>function multiplyVector(v) {</pre>
-            <pre>   Make sure this matrix can be multiplied by v // is a 4D vector</pre>
-            <pre>   Get each row from this matrix and turn it into a Vector4</pre>
-            <pre>   Dot v with each row and store the results in a new Vector4 and return it</pre>
-            <pre>}</pre>
-        </div>
+        <pre><code class="js">// This function is part of the Matrix4 class
+function multiplyVector(v) {
+    Make sure this matrix can be multiplied by v // is a 4D vector
+    Get each row from this matrix and turn it into a Vector4
+    Dot v with each row and store the results in a new Vector4 and return it
+}</code></pre>
     </div>
     <br>
 
@@ -318,20 +316,22 @@ description: "Mathematical Foundations 2: Matrices."
         <p>
             The pseudocode for how I implemented this function looks like this:
         </p>
-        <div class="eq">
-            <pre>function multiply(rightSideMatrix) {</pre>
-            <pre>   Get a new FloatArray of length 16 to store result</pre>
-            <pre>   for (i -> 16) {</pre>
-            <pre>       Get the index offset for rsm i % row length // tells us if we are on a new row as well</pre>
-            <pre>       if (We are on a new row) {</pre>
-            <pre>           Set the row vector to the current row</pre>
-            <pre>       }</pre>
-            <pre>       Get the current column from rsm using the offset index</pre>
-            <pre>       Set the result at i to the dot product of row and column </pre>
-            <pre>   }</pre>
-            <pre>   Assign the result array to this matrix and return it</pre>
-            <pre>}</pre>
-        </div>
+        <pre><code class="js">function multiply(rightSideMatrix) {
+    Get a new FloatArray of length 16 to store result
+
+    for (i -> 16) {
+        Get the index offset for rsm i % row length // tells us if we are on a new row as well
+
+        if (We are on a new row) {
+            Set the row vector to the current row
+        }
+
+        Get the current column from rsm using the offset index
+        Set the result at i to the dot product of row and column
+    }
+
+    Assign the result array to this matrix and return it
+}</code></pre>
     </div>
     <br>
 
@@ -654,17 +654,15 @@ description: "Mathematical Foundations 2: Matrices."
             do this we need to rotate the moon around the $z-axis$ (since we are living in the $xy-plane$)
             and translate the moon away from the Earth. Below is some pseudo code of how to implement it.
         </p>
-        <div class="eq">
-            <pre>function createMoonMatrix(currentRotationAngle, offsetFromEarth, earthTransform) {</pre>
-            <pre>   Create a Matrix4 to hold the moon's transformation</pre>
-            <pre>   Create a rotation matrix around the z axis with currentRotationAngle</pre>
-            <pre>   Create a translation matrix with offsetFromEarth in the x and y directions</pre>
-            <pre>       and 0 in the z</pre>
-            <pre>   Multiply the moon matrix by earthTransform</pre>
-            <pre>   Multiply the moon matrix by the rotation matrix</pre>
-            <pre>   Multiply the moon matrix by the translation matrix and return it</pre>
-            <pre>}</pre>
-        </div>
+        <pre><code class="js">function createMoonMatrix(currentRotationAngle, offsetFromEarth, earthTransform) {
+    Create a Matrix4 to hold the moons transformation
+    Create a rotation matrix around the z axis with currentRotationAngle
+    Create a translation matrix with offsetFromEarth in the x and y directions and 0 in the z
+
+    Multiply the moon matrix by earthTransform
+    Multiply the moon matrix by the rotation matrix
+    Multiply the moon matrix by the translation matrix and return it
+}</code></pre>
         <div class="img-flex-wrap">
             <div class="img-grid-box dual-grid-box-img">
                 <p>
