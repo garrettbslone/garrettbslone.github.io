@@ -212,7 +212,7 @@ sphereGeometry.render(camera, projectionMatrix, colorProgram);</code></pre>
             the camera position continually increases each key down frame then used as a translation on the camera's
             world matrix. So to rememdy this, we can add a third conditional and set the <span class="eq">cameraPositon</span>
             to $(0,\ 0,\ 0)$ so that the camera stops moving upon releasing both keys. One other possble approach to
-            avoid using that third conditional might be to make a <br><span class="eq">new Matrix4</span> (thus set
+            avoid using that third conditional might be to make a <span class="eq">new Matrix4</span> (thus set
             to the identitiy matrix), at the beginning of the function and then make the translation on it only upon
             the proper input.
         </p>
