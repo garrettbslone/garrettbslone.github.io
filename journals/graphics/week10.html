@@ -651,7 +651,9 @@ let paintersSort = () => {
     sphereGeometryList.sort((a, b) => {
         // This comparison function returns negative (don't swap) if a > b
         // and positive (swap) if a < b. Basically, we are sorting
-        // backwards. ~ is the logical not operator btw
+        // backwards. ~ is the logical not operator.
+        // Looking back at it, it would probably have been clearer to
+        // just do bLen - aLen instead of ~(aLen - bLen).
         return ~(a.getPosition().subtract(cameraPos).lengthSqr() -
                  b.getPosition().subtract(cameraPos).lengthSqr());
     });
